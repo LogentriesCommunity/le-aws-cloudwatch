@@ -21,18 +21,25 @@
    * Give your function a name
    * Set runtime to Python 2.7
 
-4. Edit code:
-   * Edit the contents of ```le_config.py```
-   * Replace values of ```log_token``` and ```debug_token``` with tokens obtained earlier.
-   * Create a .ZIP file, containing the updated ```le_config.py```, ```le_cloudwatch.py``` and the folder ```certifi```
-     * Make sure the files and ```certifi``` folder are in the **root** of the ZIP archive
-   * Choose "Upload a .ZIP file" in "Code entry type" dropdown and upload the archive created in previous step
+4. Upload function code:
+      * Create a .ZIP file, containing ```le_cloudwatch.py``` and the folder ```certifi```
+        * Make sure the files and ```certifi``` folder are in the **root** of the ZIP archive
+      * Choose "Upload a .ZIP file" in "Code entry type" dropdown and upload the archive created in previous step
 
 5. Lambda function handler and role
    * Change the "Handler" value to ```le_cloudwatch.lambda_handler```
    * Create a new basic execution role (your IAM user must have sufficient permissions to create & assign new roles)
 
-6. Allocate resources:
+6. Set Environment Variables:
+   * Token value should match UUID provided by Logentries UI or API
+   * Region should be that of your LE account - currently only ```eu```
+
+   | Key       | Value      |
+   |-----------|------------|
+   | region    | eu         |
+   | token     | token uuid |
+
+7. Allocate resources:
    * Set memory to 128 MB
    * Set timeout to ~2 minutes (script only runs for seconds at a time)
 
