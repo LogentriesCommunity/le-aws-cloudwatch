@@ -17,6 +17,10 @@ REGION = os.environ.get('region')
 ENDPOINT = '{}.data.logs.insight.rapid7.com'.format(REGION)
 PORT = 20000
 TOKEN = os.environ.get('token')
+LINE = u'\u2028'.encode('utf-8')
+
+def treat_message(message):
+    return message.replace('\n', LINE)
 
 
 def lambda_handler(event, context):
@@ -35,7 +39,7 @@ def lambda_handler(event, context):
             try:
                 sock.sendall('{} {}\n'.format(TOKEN, json.dumps(log_event['extractedFields'])))
             except KeyError:
-                sock.sendall('{} {}\n'.format(TOKEN, log_event['message']))
+                sock.sendall('{} {}\n'.format(TOKEN, treat_message(log_event['message'])))
 
     sock.close()
     logger.info('Function execution finished.')
